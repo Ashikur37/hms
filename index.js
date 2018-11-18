@@ -25,6 +25,7 @@ app.get('/',(req,res)=>{
 app.listen(port,()=>{
     console.log('app is running at port '+port)
 })
+require('./routes')(app)
 app.get('/about-us',(req,res)=>{
     res.render('aboutUs');
 })
@@ -45,9 +46,6 @@ app.get('/admin/signin',(req,res)=>{
     res.render('admin/signin',{error:'',email:''});
 })
 app.post('/admin/signin',(req,res)=>{
-    admin.find({},(err,admins)=>{
-        console.log(admins)
-    })
     admin.findOne({email:req.body.email,password:req.body.password},(err,admin)=>{
         if(admin)
         {
