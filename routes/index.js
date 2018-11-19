@@ -1,3 +1,3 @@
-module.exports=(app)=>{
-    require('./doctorRoutes')(app)
-}
+module.exports = app => {
+  require("./doctorRoutes")(app);
+};

@@ -1,29 +1,72 @@
-const {doctor,admin} =require('../data/Connect')
-exports.signin=(req,res)=>{
-    res.render('doctor/signin',{error:'',email:''})
-}
-exports.login=(req,res)=>{
-    doctor.findOne({email:req.body.email,password:req.body.password},(err,Doctor)=>{
-        if(Doctor)
-        {
-                req.session.doctor=Doctor;
-                res.redirect('/doctor/home')
-        }
-        else{
-            res.render('doctor/signin',{error:'Invalid email or password',email:req.body.email})
-        }
+const { doctor, admin, appointment } = require("../data/Connect");
+exports.authentication = (req, res, next) => {
+  if (req.session.doctor) {
+    next();
+  } else {
+    res.redirect("/");
+  }
+};
+exports.signin = (req, res) => {
+  res.render("doctor/signin", { error: "", email: "" });
+};
+exports.login = (req, res) => {
+  doctor.findOne(
+    { email: req.body.email, password: req.body.password },
+    (err, Doctor) => {
+      if (Doctor) {
+        req.session.doctor = Doctor;
+        res.redirect("/doctor/home");
+      } else {
+        res.render("doctor/signin", {
+          error: "Invalid email or password",
+          email: req.body.email
+        });
+      }
+    }
+  );
+};
+exports.home = (req, res) => {
+  res.render("doctor/home");
+};
+exports.myappointments = (req, res) => {
+  appointment
+    .find()
+    .then(appointments => {
+      appointments = appointments.filter(
+        Appointment => Appointment.doctor._id == req.session.doctor._id
+      );
+      for (i = 0; i < appointments.length; i++) {
+        appointments[i].appliedtime = appointments[i].getTime();
+      }
+      res.render("doctor/myappointment", { list: appointments });
     })
-}
-exports.home=(req,res)=>{
-    
-    res.render('doctor/home')
-}
-exports.myappointments=(req,res)=>{
-
-}
-exports.updateschedule=(req,res)=>{
-
-}
-exports.changepassword=(req,res)=>{
-
-}
+    .catch(e => {
+      console.log(e);
+    });
+};
+exports.updateschedule = (req, res) => {
+  res.render("doctor/updateschedule", { doctor: req.session.doctor, msg: "" });
+};
+exports.changeschedule = (req, res) => {
+  doctor
+    .findById(req.session.doctor._id)
+    .then(Doctor => {
+      Doctor.start_time = req.body.start_time;
+      Doctor.end_time = req.body.end_time;
+      Doctor.save()
+        .then(data => {
+          req.session.doctor = data;
+          res.render("doctor/updateschedule", {
+            doctor: req.session.doctor,
+            msg: "Schedule updated"
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+exports.changepassword = (req, res) => {};

@@ -43,55 +43,43 @@
     <div class="col-md-12">
       <div style=" background-image:url(https://pastorokeneye.com/wp-content/uploads/2018/06/041217_doctorwait_THUMB_LARGE.jpg);">
         <div class="box-header">
-          <h3 class="box-title">New Appointment</h3>
+          <h3 class="box-title">My Appointment</h3>
         </div>
         <table class="table table-striped">
-            <tr>
-                <th>User</th>
-                <th>User Image</th>
-                <th>Department</th>
-                <th>Doctor</th>
-                <th>Doctor Image</th>
-                <th>Appointed Date</th>
-                <th>Appointed Time</th>
-                <th>Details</th>
-                <th>Applied Time</th>
-                <th>Status</th>
-            </tr>
-            {{#each list}}
-                <tr>
-                    <td>
-                        {{this.user.name}}
-                    </td>
-                    <td>
-                        <img src="../../images/user/{{this.user.id}}.jpg" alt="" style="height:60px;width:60px; border-radius:50%">
-                    </td>
-                    <td>
-                        {{this.department}}
-                    </td>
-                    <td>
-                        {{this.doctor}}
-                    </td>
-                    <td>
-                        <img src="../../images/doctor/{{this.doctor}}.jpg" alt="" style="height:60px;width:60px; border-radius:50%">
-                    </td>
-                    <td>
-                        {{this.date}}
-                    </td>
-                    <td>
-                        {{this.time}}
-                    </td>
-                    <td>
-                        {{this.description}}
-                    </td>
-                    <td>
-                        {{this.appliedTime}}
-                    </td>
-                    <td>
-                        {{this.status}}
-                    </td>
-                </tr>
-            {{/each}}
+          <tr>
+            <th>User</th>
+            <th>User Image</th>
+            <th>Appointed Date</th>
+            <th>Appointed Time</th>
+            <th>Details</th>
+            <th>Applied Time</th>
+            <th>Status</th>
+          </tr>
+          {{#each list}}
+          <tr>
+            <td>
+              {{this.user.name}}
+            </td>
+            <td>
+              <img src="../../images/user/{{this.user._id}}.jpg" alt="" style="height:60px;width:60px; border-radius:50%">
+            </td>
+            <td>
+              {{this.date}}
+            </td>
+            <td>
+              {{this.time}}
+            </td>
+            <td>
+              {{this.description}}
+            </td>
+            <td>
+              {{this.appliedtime}}
+            </td>
+            <td>
+              {{this.status}}
+            </td>
+          </tr>
+          {{/each}}
         </table>
       </div>
 
@@ -104,30 +92,29 @@
   </div>
   </div>
   <!-- /.box -->
-<script>
-  changeDepartment=()=>{
-    department=document.getElementById("department").value;
-    var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      doctorList=JSON.parse(this.response);
-      doctorSelect=document.getElementById("doctor");
-      doctorSelect.innerHTML="";
-      if(doctorList.length==0)
-        {
-          alert('sorry no doctor found');
-          return;
-        }
-      doctorList.forEach(doctor=>{
-        doctorSelect.innerHTML+=`<option value='${doctor.id}'>${doctor.name}</option>`;
-      })      
-  };
-}
-  xhttp.open("GET", `/filterdoctor?department=${department}`, true);
-  xhttp.send();
-  
-}
-</script>
+  <script>
+    changeDepartment = () => {
+      department = document.getElementById("department").value;
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          doctorList = JSON.parse(this.response);
+          doctorSelect = document.getElementById("doctor");
+          doctorSelect.innerHTML = "";
+          if (doctorList.length == 0) {
+            alert('sorry no doctor found');
+            return;
+          }
+          doctorList.forEach(doctor => {
+            doctorSelect.innerHTML += `<option value='${doctor.id}'>${doctor.name}</option>`;
+          })
+        };
+      }
+      xhttp.open("GET", `/filterdoctor?department=${department}`, true);
+      xhttp.send();
+
+    }
+  </script>
   <!-- jQuery 3 -->
   <script src="../js/jquery.min.js"></script>
   <!-- Bootstrap 3.3.7 -->
