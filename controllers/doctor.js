@@ -47,6 +47,12 @@ exports.myappointments = (req, res) => {
 exports.updateschedule = (req, res) => {
   res.render("doctor/updateschedule", { doctor: req.session.doctor, msg: "" });
 };
+exports.changepassword = (req, res) => {
+  doctor.findById(req.session.doctor._id).then(Doctor => {
+    pass = Doctor.password;
+    res.render("doctor/changepassword", { err: "", pass });
+  });
+};
 exports.changeschedule = (req, res) => {
   doctor
     .findById(req.session.doctor._id)
@@ -69,4 +75,3 @@ exports.changeschedule = (req, res) => {
       console.log(err);
     });
 };
-exports.changepassword = (req, res) => {};
