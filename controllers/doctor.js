@@ -53,6 +53,18 @@ exports.changepassword = (req, res) => {
     res.render("doctor/changepassword", { err: "", pass });
   });
 };
+exports.updatepassword = (req, res) => {
+  doctor.findById(req.session.doctor._id).then(Doctor => {
+    Doctor.password = req.body.newpass;
+    Doctor.save().then(data => {
+      req.session.doctor = data;
+      res.render("doctor/changepassword", {
+        err: "Password has been changed successfully",
+        pass: data.password
+      });
+    });
+  });
+};
 exports.changeschedule = (req, res) => {
   doctor
     .findById(req.session.doctor._id)

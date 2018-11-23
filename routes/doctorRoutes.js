@@ -8,4 +8,5 @@ module.exports = app => {
   app.get("/doctor/updateschedule", doctorController.updateschedule);
   app.post("/doctor/updateschedule", doctorController.changeschedule);
   app.get("/doctor/changepassword", doctorController.changepassword);
+  app.post("/doctor/changepassword", doctorController.updatepassword);
 };
