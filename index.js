@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3001 || process.env.PORT;
+const port = 3000 || process.env.PORT;
 const bodyParser = require("body-parser");
 const adminController = require("./controllers/admin");
 const userController = require("./controllers/user");
@@ -27,7 +27,7 @@ app.listen(port, () => {
 });
 require("./routes")(app);
 app.get("/about-us", (req, res) => {
-  res.render("aboutUs");
+  res.render("aboutus");
 });
 app.get("/available_bed", (req, res) => {
   res.render("availablebed");
