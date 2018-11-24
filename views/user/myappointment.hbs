@@ -39,83 +39,51 @@
 
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaCXqR84o5WvhkBWp_aMbqFyHdu3E3dav36vG4EPIjsaBzA7eH"
-        style='height:50px;width:50px;border-radius:50%'>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link " href="/">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/user/myappointment">My Appointment</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/user/newappointment">Book Appointment</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/user/myappointment">My Appointment</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Change Password</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/user/logout">Logout</a>
-          </li>
-        </ul>
-        <form class="form-inline">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
-    </nav>
+    {{>usernav}}
     <div class="col-md-12">
       <div style=" background-image:url(https://pastorokeneye.com/wp-content/uploads/2018/06/041217_doctorwait_THUMB_LARGE.jpg);">
         <div class="box-header">
           <h3 class="box-title">New Appointment</h3>
         </div>
         <table class="table table-striped">
-            <tr>
-                <th>Department</th>
-                <th>Doctor</th>
-                <th>Appointed Date</th>
-                <th>Appointed Time</th>
-                <th>Details</th>
-                <th>Applied Time</th>
-                <th>Status</th>
-            </tr>
-            {{#each list}}
-                <tr>
-                    <td>
-                        {{this.department}}
-                    </td>
-                    <td>
-                        {{this.doctor}}
-                    </td>
-                    <td>
-                        {{this.date}}
-                    </td>
-                    <td>
-                        {{this.time}}
-                    </td>
-                    <td>
-                        {{this.description}}
-                    </td>
-                    <td>
-                        {{this.appliedTime}}
-                    </td>
-                    <td>
-                        {{this.status}}
-                    </td>
-                </tr>
-            {{/each}}
+          <tr>
+            <th>Department</th>
+            <th>Doctor</th>
+            <th>Doctor Image</th>
+            <th>Appointed Date</th>
+            <th>Appointed Time</th>
+            <th>Details</th>
+            <th>Applied Time</th>
+            <th>Status</th>
+          </tr>
+          {{#each list}}
+          <tr>
+            <td>
+              {{this.doctor.department}}
+            </td>
+            <td>
+              {{this.doctor.name}}
+            </td>
+            <td>
+              <img src="../../images/doctor/{{this.doctor._id}}.jpg" alt="" style="height:60px;width:60px; border-radius:50%">
+            </td>
+            <td>
+              {{this.date}}
+            </td>
+            <td>
+              {{this.time}}
+            </td>
+            <td>
+              {{this.description}}
+            </td>
+            <td>
+              {{this.appliedTime}}
+            </td>
+            <td>
+              {{this.status}}
+            </td>
+          </tr>
+          {{/each}}
         </table>
       </div>
 
@@ -128,30 +96,29 @@
   </div>
   </div>
   <!-- /.box -->
-<script>
-  changeDepartment=()=>{
-    department=document.getElementById("department").value;
-    var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      doctorList=JSON.parse(this.response);
-      doctorSelect=document.getElementById("doctor");
-      doctorSelect.innerHTML="";
-      if(doctorList.length==0)
-        {
-          alert('sorry no doctor found');
-          return;
-        }
-      doctorList.forEach(doctor=>{
-        doctorSelect.innerHTML+=`<option value='${doctor.id}'>${doctor.name}</option>`;
-      })      
-  };
-}
-  xhttp.open("GET", `/filterdoctor?department=${department}`, true);
-  xhttp.send();
-  
-}
-</script>
+  <script>
+    changeDepartment = () => {
+      department = document.getElementById("department").value;
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          doctorList = JSON.parse(this.response);
+          doctorSelect = document.getElementById("doctor");
+          doctorSelect.innerHTML = "";
+          if (doctorList.length == 0) {
+            alert('sorry no doctor found');
+            return;
+          }
+          doctorList.forEach(doctor => {
+            doctorSelect.innerHTML += `<option value='${doctor.id}'>${doctor.name}</option>`;
+          })
+        };
+      }
+      xhttp.open("GET", `/filterdoctor?department=${department}`, true);
+      xhttp.send();
+
+    }
+  </script>
   <!-- jQuery 3 -->
   <script src="../js/jquery.min.js"></script>
   <!-- Bootstrap 3.3.7 -->

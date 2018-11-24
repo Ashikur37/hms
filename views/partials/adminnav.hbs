@@ -17,21 +17,30 @@
                 <a class="nav-link" href="/admin/adddoctor">Add Doctor</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/admin/addstaff">Add Staff</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/admin/viewdoctorlist">View Doctor</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/unaprovedusers">Unaproved User</a>
+                <a class="nav-link" href="/admin/viewstafflist">View Staff</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Change Password</a>
+                <a class="nav-link" href="/admin/appointmentlist">View Appointments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/users">Userlist</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin/changepassword">Change Password</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/">Logout</a>
             </li>
         </ul>
-        <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+        <form class="form-inline" action="/action_page.php">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <button class="btn btn-success" type="submit">Search</button>
         </form>
     </div>
 </nav>

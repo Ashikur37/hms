@@ -35,16 +35,7 @@ router.get("/user/doctorlist", (req, res) => {
     });
   });
 });
-router.get("/user/myappointment", (req, res) => {
-  fs.readFile("./data/appointmentList.txt", "utf-8", (err, data) => {
-    //console.log(data)
-    let appointmentList = JSON.parse(data);
-    appointmentList = appointmentList.filter(
-      appointment => appointment.user.id == req.session.user.id
-    );
-    res.render("user/myappointment", { list: appointmentList });
-  });
-});
+
 router.get("/user/newappointment", (req, res) => {
   if (!req.session.user) {
     res.redirect("/signin");
@@ -61,35 +52,39 @@ router.get("/filterdoctor", (req, res) => {
 });
 router.post("/user/newappointment", (req, res) => {
   doctor.findById(req.body.doctor, (err, Doctor) => {
-    appointment.find({date:req.body.date,doctor:Doctor}, (err, appointments) => {
-        console.log(appointments.length)
-      if (appointments.length <= 5) {
-        Appointment = new appointment({
-          date: req.body.date,
-          time: req.body.time,
-          doctor: Doctor,
-          description: req.body.description,
-          user: req.session.user,
-          status: "applied",
-          serial: appointments.length+1
-        });
-        Appointment.save().then(err => {
-          appointment.find(
-            { date: req.body.date, doctor: Doctor },
-            (err, appList) => {
-              if (appList.length <= 5) {
-                let serial = appList.length;
-                res.render("user/successappointment", {
-                  appointment: Appointment,user:req.session.user
-                });
+    appointment.find(
+      { date: req.body.date, doctor: Doctor },
+      (err, appointments) => {
+        console.log(appointments.length);
+        if (appointments.length <= 5) {
+          Appointment = new appointment({
+            date: req.body.date,
+            time: req.body.time,
+            doctor: Doctor,
+            description: req.body.description,
+            user: req.session.user,
+            status: "applied",
+            serial: appointments.length + 1
+          });
+          Appointment.save().then(err => {
+            appointment.find(
+              { date: req.body.date, doctor: Doctor },
+              (err, appList) => {
+                if (appList.length <= 5) {
+                  let serial = appList.length;
+                  res.render("user/successappointment", {
+                    appointment: Appointment,
+                    user: req.session.user
+                  });
+                }
               }
-            }
-          );
-        });
-      } else {
-          res.render('user/failureappointment')
+            );
+          });
+        } else {
+          res.render("user/failureappointment");
+        }
       }
-    });
+    );
   });
 });
 router.get("/signin", (req, res) => {
@@ -113,13 +108,14 @@ router.get("/user/home", (req, res) => {
 router.post("/signin", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  user.find({},(err,users)=>{
-    console.log(users)
-  })
+  user.find({}, (err, users) => {
+    console.log(users);
+  });
   user.findOne({ email: email, password: password }, (err, User) => {
     if (User) {
       req.session.user = User;
-      res.redirect("/user/home");
+      if (User.block) res.render("user/blockeduser");
+      else res.redirect("/user/home");
     } else {
       res.render("signin", {
         error: "Invalid email or password",

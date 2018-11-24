@@ -54,6 +54,24 @@ const doctorSchema = new schema({
   visiting_days: [String],
   fee: Number
 });
+const staffSchema = new schema({
+  name: String,
+  age: Number,
+  email: String,
+  gender: String,
+  phone: String,
+  address: String,
+  password: String,
+  Join_date: String,
+  salary: Number,
+  start_time: String,
+  end_time: String,
+  available: {
+    type: Boolean,
+    default: true
+  },
+  duty_days: [String]
+});
 const userSchema = new schema({
   name: String,
   age: Number,
@@ -61,14 +79,18 @@ const userSchema = new schema({
   password: String,
   gender: String,
   phone: String,
-  address: String
+  address: String,
+  block: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports.user = mongoose.model("user", userSchema);
 module.exports.doctor = mongoose.model("doctor", doctorSchema);
 module.exports.appointment = mongoose.model("appointment", appointmentSchema);
 module.exports.admin = mongoose.model("admin", adminSchema);
-
+module.exports.staff = mongoose.model("staff", staffSchema);
 db.on("error", err => {
   console.log("error");
 });

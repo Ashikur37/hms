@@ -4,52 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HUB CMS</title>
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<style>
-    body{
-    }
-    @keyframes moveLeft {
-    0%   {opacity:0;transform: translateX(300px)}
-    25%  {opacity: 1}
-    50%  {}
-    75%  {}
-    100% {}
-}
-.ctitle{
-    animation: moveLeft 2s ease-out;
-}
-.cover{
-    height:90vh;
-    position: relative;    
-     background-repeat: none;
-     background-size: 100%;
-     background-position: top;
-    clip-path: polygon(0 0,100% 0,100% 85vh,0 100%)
-}
-#title{
-    color:rgba(41, 43, 36, 0.562);
-    font-size:30px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    left:40%;
-    top:50%;
-    position: absolute;
-}
-</style>
-<body >
+
+<body style=''>
     <div class="container">
         {{>publicnav}}
-        <center>
-            <h3 class="ctitle" style="color:#fff">Clinic Management System</h3>
-        </center>
-       
+        <br>
+        <div>
+            <span class="text text-danger"><b>{{message}}</b></span>
+            <span class="text text-danger"><b>{{error}}</b></span>
+            <form action="/staff/signin" method="post">
+                <div class="form-group">
+                    <span>
+                        <label for="">staff Email</label>
+                    </span>
+                    <input type="email" value="{{email}}" name="email" class="form-control" placeholder="Please give email address">
+                </div>
+                <div class="form-group">
+                    <span>
+                        <label for="">staff Password</label>
+                    </span>
+                    <input type="password" name="password" class="form-control" placeholder="Please give the password">
+                </div>
+                <input type="submit" class="btn  btn-outline-success" value='Sign In'>
+                <span class="text text-warning"><b>Doesn't have an account?</b></span>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;
+                <a href="/SignUp" class="btn  btn-outline-danger">Register Now</a>
+
+            </form>
+        </div>
+
+
     </div>
-   
 </body>
 
 </html>

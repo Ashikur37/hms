@@ -50,6 +50,7 @@ app.post("/admin/signin", (req, res) => {
     { email: req.body.email, password: req.body.password },
     (err, admin) => {
       if (admin) {
+        req.session.admin = admin;
         res.redirect("/admin");
       } else {
         res.render("admin/signin", {

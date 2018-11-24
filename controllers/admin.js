@@ -4,6 +4,9 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const connect = require("../data/Connect");
 const doctor = connect.doctor;
+const admin = connect.admin;
+const staff = connect.staff;
+
 doctorList = callback => {
   fs.readFile("./data/doctorList.txt", "utf-8", (err, data) => {
     if (!err) {
@@ -133,6 +136,12 @@ router.get("/admin/deletedoctor", (req, res) => {
   id = req.query.id;
   doctor.deleteOne({ _id: id }, err => {
     res.redirect("/admin/viewdoctorlist");
+  });
+});
+router.get("/admin/deletestaff", (req, res) => {
+  id = req.query.id;
+  staff.deleteOne({ _id: id }, err => {
+    res.redirect("/admin/viewstafflist");
   });
 });
 router.get("/admin/editdoctor", (req, res) => {
