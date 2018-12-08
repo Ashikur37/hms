@@ -108,6 +108,11 @@ const feedbackSchema = new schema({
     default: false
   }
 });
+const seatSchema = new schema({
+  type: String,
+  total: Number,
+  available: Number
+});
 module.exports.feedback = mongoose.model("feedback", feedbackSchema);
 module.exports.user = mongoose.model("user", userSchema);
 module.exports.doctor = mongoose.model("doctor", doctorSchema);
@@ -115,6 +120,7 @@ module.exports.appointment = mongoose.model("appointment", appointmentSchema);
 module.exports.admin = mongoose.model("admin", adminSchema);
 module.exports.staff = mongoose.model("staff", staffSchema);
 module.exports.leave = mongoose.model("leave", leaveSchema);
+module.exports.seat = mongoose.model("seat", seatSchema);
 db.on("error", err => {
   console.log("error");
 });

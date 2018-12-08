@@ -7,6 +7,7 @@ const doctor = connect.doctor;
 const admin = connect.admin;
 const staff = connect.staff;
 const user = connect.user;
+const seat = connect.seat;
 const feedback = connect.feedback;
 doctorList = callback => {
   fs.readFile("./data/doctorList.txt", "utf-8", (err, data) => {
@@ -20,6 +21,49 @@ doctorList = callback => {
 router.get("/getUserList", (req, res) => {
   user.find().then(ulist => {
     res.json(ulist);
+  });
+});
+router.get("/admin/editseat", (req, res) => {
+  const { type, av } = req.query;
+  seat.findOne({ type }).then(st => {
+    st.available = av;
+    st.save().then(data => {
+      res.redirect("/admin/seatinfo");
+    });
+  });
+});
+router.get("/admin/seatinfo", (req, res) => {
+  seat.find().then(slist => {
+    if (slist.length == 0) {
+      seatList = [
+        {
+          type: "Ward",
+          total: 20,
+          available: 15
+        },
+        {
+          type: "Normal",
+          total: 30,
+          available: 20
+        },
+        {
+          type: "Deluxe",
+          total: 10,
+          available: 8
+        }
+      ];
+      seatList.forEach(st => {
+        Seat = new seat(st);
+        Seat.save().then(data => {});
+      });
+      res.redirect("/admin/seatinfo");
+    } else {
+      res.render("admin/seatInfo.hbs", {
+        w: slist[0],
+        n: slist[1],
+        d: slist[2]
+      });
+    }
   });
 });
 router.post("/feedback", (req, res) => {
