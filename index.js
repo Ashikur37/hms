@@ -45,29 +45,31 @@ app.post("/doctor/signin", (req, res) => {
 app.get("/admin/signin", (req, res) => {
   res.render("admin/signin", { error: "", email: "" });
 });
-app.get('/testAdmin', (req, res) => {
+app.get("/testAdmin", (req, res) => {
   ad = new admin({
-    email: 'admin@gmail.com',
-    password: 'adm'
-  })
-  ad.save().then(data => {
-    res.json(data)
-  }).catch(e => {
-    console.log(e)
-  })
+    email: "admin@gmail.com",
+    password: "adm"
+  });
+  ad.save()
+    .then(data => {
+      res.json(data);
+    })
+    .catch(e => {
+      console.log(e);
+    });
   /*admin.find().then(Admin=>{
     res.json(Admin)
   }).catch(e=>{
     console.log(e)
   })*/
-})
+});
 
 //change the link
 //this will be same as nav bar
 app.get("/secondlink", (req, res) => {
-  res.render("sample")
+  res.render("sample");
   //this is the way how to link
-})
+});
 app.post("/admin/signin", (req, res) => {
   admin.findOne(
     { email: req.body.email, password: req.body.password },
@@ -109,7 +111,7 @@ app.get("/location", (req, res) => {
   res.render("location");
 });
 
-app.get("/diagonostic", (req, res) => {
+app.get("/diagnostic", (req, res) => {
   res.render("diagonostic");
 });
 app.get("/pharmacy", (req, res) => {
@@ -135,11 +137,13 @@ app.get("/viewdoctorlist", (req, res) => {
   msg = "";
   doctor.find({}, (err, doctorList) => {
     //res.json(doctorList)
-    // ALi capital letter 
+    // ALi capital letter
     if (req.query.k) {
       k = req.query.k.toLowerCase();
-      msg = 'search result for ' + k;
-      doctorList = doctorList.filter(dc => dc.department.includes(k) || dc.name.toLowerCase().includes(k))
+      msg = "search result for " + k;
+      doctorList = doctorList.filter(
+        dc => dc.department.includes(k) || dc.name.toLowerCase().includes(k)
+      );
     }
     res.render("viewdoctorList", { doctors: doctorList, msg });
   });
