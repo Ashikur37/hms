@@ -1,0 +1,82 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+</head>
+
+<body style="padding:50px; margin:40px">
+    <div class="row" style="border-bottom:5px solid teal;">
+        <div class="col-md-4">
+            <h4>Hospital NameL CMS</h4>
+            Address: <label for="">Gazaria,Munsigonj</label>
+            <br>
+            City: Narayanganj
+            <br>
+            Phone: <u>01670790971</u>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h4 style="float:right">Medical Invoice</h4>
+            <span style="float:right;margin-top:40px">
+                Date:{{dt}}
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <b>Patient Info</b>
+            <br>
+            Name:{{name}}
+            <br>
+            Address:{{address}}
+            <br>
+            Phone:{{phone}}
+            <br>
+            Email:{{email}}
+        </div>
+        <div class="col-md-6">
+            <div style="float:right">
+                Bed NO:{{bed}}
+                <br>
+                Admission Date:{{admission}}
+                <br>
+                Discharge Date:{{discharge}}
+                <br>
+
+            </div>
+        </div>
+    </div>
+    <center>
+        Total:{{total}}
+        <br>
+        Discount:{{discount}}
+        <br>
+        Paid:{{paid}}
+        <br>
+        Due: {{due}}
+    </center>
+    <hr>
+    <button onclick="prints()" id="bt" class="btn btn-info">
+        Print
+
+    </button>
+</body>
+<script>
+    prints = () => {
+        document.getElementById("bt").style.display = "none";
+        window.setTimeout(function () {
+            window.print();
+        }, 2000);
+        window.setTimeout(function () {
+            document.getElementById("bt").style.display = "inline-block";
+        }, 6000);
+
+    }
+</script>
+
+</html>

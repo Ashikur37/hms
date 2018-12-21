@@ -16,4 +16,6 @@ module.exports = app => {
   app.post("/admin/addadmin", adminController.insertadmin);
   app.get("/admin/adminlist", adminController.adminlist);
   app.get("/admin/deleteadmin", adminController.deleteadmin);
+  app.get("/admin/billing", adminController.billing);
+  app.post("/admin/billing", adminController.printBill);
 };

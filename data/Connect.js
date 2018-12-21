@@ -48,6 +48,10 @@ const adminSchema = new schema({
     type: Boolean,
     default: true
   },
+  account: {
+    type: Boolean,
+    default: true
+  },
   admin: {
     type: Boolean,
     default: true

@@ -21,18 +21,21 @@ exports.insertadmin = (req, res) => {
     vappointment = false;
     vuser = false;
     vstaff = false;
+    vaccount = false;
   } else if (role == 2) {
     vseat = true;
     vdoctor = false;
     vappointment = false;
     vuser = false;
     vstaff = true;
+    vaccount = true;
   } else {
     vseat = true;
     vdoctor = false;
     vappointment = true;
     vuser = true;
     vstaff = false;
+    vaccount = false;
   }
   let Admin = new admin({
     name,
@@ -48,6 +51,46 @@ exports.insertadmin = (req, res) => {
   });
   Admin.save().then(ad => {
     res.redirect("/admin/adminlist");
+  });
+};
+exports.billing = (req, res) => {
+  res.render("admin/billing");
+};
+exports.printBill = (req, res) => {
+  const {
+    name,
+    age,
+    phone,
+    email,
+    address,
+    bed,
+    admission,
+    discharge,
+    total,
+    discount,
+    paid,
+    due
+  } = req.body;
+  dt =
+    new Date().getDate() +
+    "/" +
+    new Date().getMonth() +
+    "/" +
+    new Date().getFullYear();
+  res.render("admin/printBill", {
+    name,
+    age,
+    phone,
+    email,
+    address,
+    bed,
+    admission,
+    discharge,
+    total,
+    discount,
+    paid,
+    due,
+    dt
   });
 };
 exports.deleteadmin = (req, res) => {
